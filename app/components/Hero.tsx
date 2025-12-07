@@ -101,7 +101,7 @@ export const Hero = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-yellow-500"></span>
               </span>
-              <span>শেষ সময়: <strong>১৬ নভেম্বর ২০২৫</strong></span>
+              <span>শেষ সময়: <strong>১৮ ডিসেম্বর ২০২৫</strong></span>
             </div>
           </div>
         </div>

@@ -24,12 +24,11 @@ export const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
-        <div
-          className="cursor-pointer"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        >
-          <TurfXLogo size="small" />
-        </div>
+        <Link href="/">
+          <div className="cursor-pointer">
+            <TurfXLogo size="small" />
+          </div>
+        </Link>
 
         <Link
           href="/register"

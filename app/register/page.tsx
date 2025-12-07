@@ -83,18 +83,12 @@ export default function RegisterPage() {
               আপনার টিম সফলভাবে রেজিস্টার হয়েছে। শীঘ্রই আমরা আপনার সাথে যোগাযোগ
               করব।
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex justify-center">
               <Link
                 href="/"
                 className="px-6 py-3 bg-emerald-500 text-slate-950 font-semibold rounded-lg hover:bg-emerald-400 transition-colors"
               >
                 হোমে ফিরুন
-              </Link>
-              <Link
-                href="/teams"
-                className="px-6 py-3 bg-slate-800 text-white font-semibold rounded-lg hover:bg-slate-700 transition-colors border border-white/10"
-              >
-                সব টিম দেখুন
               </Link>
             </div>
           </div>
@@ -105,7 +99,23 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
-      <Navbar />
+      {/* Custom Navbar for Register Page */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-xl border-b border-white/5 py-4">
+        <div className="container mx-auto px-6 flex justify-between items-center">
+          <Link href="/" className="cursor-pointer">
+            <div className="text-emerald-500 font-bold text-xl">
+              <span>Turf</span>
+              <span className="text-white">X</span>
+            </div>
+          </Link>
+          <Link
+            href="/register"
+            className="px-6 py-2 bg-emerald-500 text-slate-950 font-semibold rounded-full hover:bg-emerald-400 transition-colors text-sm"
+          >
+            রেজিস্টার করুন
+          </Link>
+        </div>
+      </nav>
 
       {/* Main Content */}
       <main className="container mx-auto px-4 sm:px-6 py-8 sm:py-12 pt-24 sm:pt-28">
@@ -135,12 +145,6 @@ export default function RegisterPage() {
             <h3 className="text-lg font-semibold text-white mb-6">
               টিমের তথ্য দিন
             </h3>
-
-            {error && (
-              <div className="p-3 rounded-lg text-sm bg-red-500/20 text-red-400 border border-red-500/30 mb-4">
-                {error}
-              </div>
-            )}
 
             <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
               <div>
@@ -225,6 +229,12 @@ export default function RegisterPage() {
               >
                 {isSubmitting ? "রেজিস্ট্রেশন হচ্ছে..." : "রেজিস্ট্রেশন করুন"}
               </button>
+
+              {error && (
+                <div className="p-4 rounded-lg text-sm bg-red-500/20 text-red-400 border border-red-500/30 mt-4">
+                  {error}
+                </div>
+              )}
             </form>
           </div>
 

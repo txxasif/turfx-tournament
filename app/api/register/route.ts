@@ -27,6 +27,15 @@ export async function POST(request: NextRequest) {
 
     await connectToDatabase();
 
+    // Check if 32 teams already registered
+    const teamCount = await Team.countDocuments();
+    if (teamCount >= 32) {
+      return NextResponse.json(
+        { error: "রেজিস্ট্রেশন বন্ধ করা হয়েছে। ৩২টি দল সম্পূর্ণ হয়েছে" },
+        { status: 400 }
+      );
+    }
+
     // Check if team name already exists
     const existingTeam = await Team.findOne({ teamName });
     if (existingTeam) {

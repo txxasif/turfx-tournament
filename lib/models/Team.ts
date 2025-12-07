@@ -7,7 +7,6 @@ export interface ITeam extends Document {
   address: string;
   managerName: string;
   registeredAt: Date;
-  status: "pending" | "confirmed" | "rejected";
 }
 
 export interface TeamInput {
@@ -50,11 +49,6 @@ const TeamSchema = new Schema<ITeam>(
     registeredAt: {
       type: Date,
       default: Date.now,
-    },
-    status: {
-      type: String,
-      enum: ["pending", "confirmed", "rejected"],
-      default: "pending",
     },
   },
   {
