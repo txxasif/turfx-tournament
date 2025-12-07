@@ -84,7 +84,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Send Telegram notification (non-blocking)
-    sendTelegramNotification({
+    const telegramResult = await sendTelegramNotification({
       teamName,
       name,
       mobile: standardMobile,
@@ -93,9 +93,11 @@ export async function POST(request: NextRequest) {
       registeredAt: new Date().toLocaleString("bn-BD", {
         timeZone: "Asia/Dhaka",
       }),
-    }).catch((error) => {
-      console.error("Telegram notification failed:", error);
     });
+
+    if (!telegramResult.success) {
+      console.error("Telegram notification failed:", telegramResult.error);
+    }
 
     return NextResponse.json(
       {
