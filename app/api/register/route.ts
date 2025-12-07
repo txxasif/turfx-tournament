@@ -17,10 +17,12 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate mobile number (Bangladesh format)
-    const mobileRegex = /^01[3-9]\d{8}$/;
-    if (!mobileRegex.test(mobile.replace(/\s/g, ""))) {
+    // Supports: 01XXXXXXXXX, +8801XXXXXXXXX, 8801XXXXXXXXX
+    const cleanMobile = mobile.replace(/\s/g, "").replace(/^\+/, "");
+    const mobileRegex = /^(880)?01[3-9]\d{8}$/;
+    if (!mobileRegex.test(cleanMobile)) {
       return NextResponse.json(
-        { error: "সঠিক মোবাইল নাম্বার দিন" },
+        { error: "সঠিক মোবাইল নাম্বার দিন (01XXXXXXXXX বা +8801XXXXXXXXX)" },
         { status: 400 }
       );
     }
