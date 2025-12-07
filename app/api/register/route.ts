@@ -16,16 +16,30 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validate mobile number (Bangladesh format)
-    // Supports: 01XXXXXXXXX (11 digits), +8801XXXXXXXXX (15 digits with +880), 8801XXXXXXXXX (13 digits)
+    // SIMPLE BD MOBILE VALIDATION - Accepts any digit after 0
+    // Remove spaces and plus sign
     const cleanMobile = mobile.replace(/\s/g, "").replace(/^\+/, "");
-    const mobileRegex = /^(880)?01[3-9]\d{7}$/;
-    if (!mobileRegex.test(cleanMobile)) {
+    
+    // Simple validation: Must be 11 digits starting with 01
+    // OR 13 digits starting with 880
+    // OR 10 digits starting with 1
+    const isValidBDMobile = /^(8801|01|1)\d{9}$/.test(cleanMobile);
+    
+    if (!isValidBDMobile) {
       return NextResponse.json(
-        { error: "সঠিক মোবাইল নাম্বার দিন (01XXXXXXXXX বা +8801XXXXXXXXX)" },
+        { error: "সঠিক মোবাইল নাম্বার দিন (উদাহরণ: 01712345678)" },
         { status: 400 }
       );
     }
+
+    // Convert to standard 880 format
+    let standardMobile = cleanMobile;
+    if (cleanMobile.startsWith("01")) {
+      standardMobile = "880" + cleanMobile.substring(1); // 01712345678 -> 8801712345678
+    } else if (cleanMobile.startsWith("1") && cleanMobile.length === 10) {
+      standardMobile = "880" + cleanMobile; // 1712345678 -> 8801712345678
+    }
+    // If already 880..., keep it
 
     await connectToDatabase();
 
@@ -48,7 +62,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if mobile number already exists
-    const existingMobile = await Team.findOne({ mobile });
+    const existingMobile = await Team.findOne({ 
+      mobile: standardMobile 
+    });
+    
     if (existingMobile) {
       return NextResponse.json(
         { error: "এই মোবাইল নাম্বার আগে থেকেই রেজিস্টার্ড" },
@@ -59,7 +76,7 @@ export async function POST(request: NextRequest) {
     // Create new team
     const newTeam = await Team.create({
       name,
-      mobile,
+      mobile: standardMobile,
       teamName,
       address,
       managerName,
