@@ -1,7 +1,8 @@
 import { Phone } from "lucide-react";
+import Image from "next/image";
 
 const contacts = [
-  { name: "মাইনুল", phone: "01839759953", label: "বিকাশ পেমেন্ট" },
+  { name: "মাইনুল", phone: "01839759953", label: "বিকাশ পেমেন্ট", hasBkash: true },
   { name: "নাজমুল", phone: "01864726073", label: "আয়োজক" },
   { name: "ইব্রাহিম", phone: "01868685752", label: "আয়োজক" },
 ];
@@ -32,9 +33,24 @@ export const Contact = () => {
                   <Phone size={14} />
                   <span className="font-mono text-lg">{person.phone}</span>
                 </div>
-                <span className="text-xs text-slate-600 uppercase tracking-widest group-hover:text-slate-500 transition-colors">
-                  {person.label}
-                </span>
+                {person.hasBkash ? (
+                  <div className="flex items-center justify-center gap-2">
+                    <Image
+                      src="/payment-methods/bkash.png"
+                      alt="bKash"
+                      width={60}
+                      height={20}
+                      className="opacity-80 group-hover:opacity-100 transition-opacity"
+                    />
+                    <span className="text-xs text-slate-600 uppercase tracking-widest group-hover:text-slate-500 transition-colors">
+                      পেমেন্ট
+                    </span>
+                  </div>
+                ) : (
+                  <span className="text-xs text-slate-600 uppercase tracking-widest group-hover:text-slate-500 transition-colors">
+                    {person.label}
+                  </span>
+                )}
               </a>
             ))}
           </div>

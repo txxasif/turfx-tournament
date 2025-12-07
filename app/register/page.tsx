@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { CheckCircle } from "lucide-react";
 import { Navbar } from "../components";
 
@@ -240,13 +241,26 @@ export default function RegisterPage() {
 
           {/* Payment Info */}
           <div className="mt-6 sm:mt-8 p-4 rounded-lg bg-slate-900/50 border border-white/5">
-            <p className="text-sm text-slate-400 text-center">
-              রেজিস্ট্রেশনের পর এন্ট্রি ফি{" "}
-              <span className="text-emerald-400 font-semibold">৩,০০০/-</span>{" "}
-              টাকা বিকাশ/নগদে পাঠান:{" "}
-              <span className="text-white font-medium">01839759953</span>{" "}
-              (মাইনুল)
-            </p>
+            <div className="text-sm text-slate-400 text-center">
+              <p className="mb-3">
+                রেজিস্ট্রেশনের পর এন্ট্রি ফি{" "}
+                <span className="text-emerald-400 font-semibold">৩,০০০/-</span>{" "}
+                টাকা পাঠান:
+              </p>
+              <div className="flex items-center justify-center">
+                <Image
+                  src="/payment-methods/bkash.png"
+                  alt="bKash"
+                  width={70}
+                  height={24}
+                  className="opacity-90"
+                />
+              </div>
+              <p className="mt-3">
+                <span className="text-white font-medium">01839759953</span>{" "}
+                <span className="text-slate-500">(মাইনুল)</span>
+              </p>
+            </div>
           </div>
         </div>
       </main>
