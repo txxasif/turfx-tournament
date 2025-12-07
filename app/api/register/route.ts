@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/mongodb";
 import Team, { TeamInput } from "@/lib/models/Team";
+import { sendTelegramNotification } from "@/lib/telegram";
 
 export async function POST(request: NextRequest) {
   try {
@@ -80,6 +81,20 @@ export async function POST(request: NextRequest) {
       teamName,
       address,
       managerName,
+    });
+
+    // Send Telegram notification (non-blocking)
+    sendTelegramNotification({
+      teamName,
+      name,
+      mobile: standardMobile,
+      address,
+      managerName,
+      registeredAt: new Date().toLocaleString("bn-BD", {
+        timeZone: "Asia/Dhaka",
+      }),
+    }).catch((error) => {
+      console.error("Telegram notification failed:", error);
     });
 
     return NextResponse.json(
